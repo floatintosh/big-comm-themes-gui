@@ -11,13 +11,14 @@ import locale
 import threading
 import time
 import random
+import xml.etree.ElementTree as ET
 
 # Complete translation dictionary
 TRANSLATIONS = {
     "en": {
-        "window_title": "Big Community GNOME Themes GUI",
-        "select_layout": "Select GNOME Shell Layout",
-        "select_shell_theme": "Select GNOME Shell Theme",
+        "window_title": "Big Community Desktop Themes GUI",
+        "select_layout": "Select Desktop Layout",
+        "select_shell_theme": "Select Shell Theme",
         "select_gtk_theme": "Select GTK Theme",
         "applying": "Applying {layout} layout...",
         "applying_shell": "Applying {theme} shell theme...",
@@ -35,11 +36,125 @@ TRANSLATIONS = {
         "apply": "Apply",
         "about": "About",
         "quit": "Quit",
-        "description_layout": "Apply the {layout} layout to your GNOME Shell.",
-        "description_shell": "Apply the {theme} theme to your GNOME Shell.",
-        "description_gtk": "Apply the {theme} theme to your GTK applications."
+        "description_layout": "Apply the {layout} layout to your desktop.",
+        "description_shell": "Apply the {theme} theme to your desktop shell.",
+        "description_gtk": "Apply the {theme} theme to your GTK applications.",
+        "gnome": "GNOME",
+        "cinnamon": "Cinnamon",
+        "xfce": "XFCE"
     },
-    # ... (other translations remain the same)
+    "es": {
+        "window_title": "GUI de Temas de Escritorio de Big Community",
+        "select_layout": "Seleccionar Diseño de Escritorio",
+        "select_shell_theme": "Seleccionar Tema del Shell",
+        "select_gtk_theme": "Seleccionar Tema GTK",
+        "applying": "Aplicando diseño {layout}...",
+        "applying_shell": "Aplicando tema de shell {theme}...",
+        "applying_gtk": "Aplicando tema GTK {theme}...",
+        "success": "Diseño {layout} aplicado con éxito",
+        "success_shell": "Tema de shell {theme} aplicado con éxito",
+        "success_gtk": "Tema GTK {theme} aplicado con éxito",
+        "error_config": "Error: Archivo de configuración no encontrado - {file}",
+        "error_applying": "Error al aplicar el diseño: {error}",
+        "error_shell": "Error al aplicar el tema del shell: {error}",
+        "error_gtk": "Error al aplicar el tema GTK: {error}",
+        "error": "Error: {error}",
+        "no_themes": "No se encontraron temas",
+        "refresh": "Actualizar",
+        "apply": "Aplicar",
+        "about": "Acerca de",
+        "quit": "Salir",
+        "description_layout": "Aplica el diseño {layout} a tu escritorio.",
+        "description_shell": "Aplica el tema {theme} a tu shell de escritorio.",
+        "description_gtk": "Aplica el tema {theme} a tus aplicaciones GTK.",
+        "gnome": "GNOME",
+        "cinnamon": "Cinnamon",
+        "xfce": "XFCE"
+    },
+    "fr": {
+        "window_title": "GUI de Thèmes de Bureau de Big Community",
+        "select_layout": "Sélectionner la disposition du bureau",
+        "select_shell_theme": "Sélectionner le thème du shell",
+        "select_gtk_theme": "Sélectionner le thème GTK",
+        "applying": "Application de la disposition {layout}...",
+        "applying_shell": "Application du thème du shell {theme}...",
+        "applying_gtk": "Application du thème GTK {theme}...",
+        "success": "Disposition {layout} appliquée avec succès",
+        "success_shell": "Thème du shell {theme} appliqué avec succès",
+        "success_gtk": "Thème GTK {theme} appliqué avec succès",
+        "error_config": "Erreur: Fichier de configuration non trouvé - {file}",
+        "error_applying": "Erreur lors de l'application de la disposition: {error}",
+        "error_shell": "Erreur lors de l'application du thème du shell: {error}",
+        "error_gtk": "Erreur lors de l'application du thème GTK: {error}",
+        "error": "Erreur: {error}",
+        "no_themes": "Aucun thème trouvé",
+        "refresh": "Actualiser",
+        "apply": "Appliquer",
+        "about": "À propos",
+        "quit": "Quitter",
+        "description_layout": "Applique la disposition {layout} à votre bureau.",
+        "description_shell": "Applique le thème {theme} à votre shell de bureau.",
+        "description_gtk": "Applique le thème {theme} à vos applications GTK.",
+        "gnome": "GNOME",
+        "cinnamon": "Cinnamon",
+        "xfce": "XFCE"
+    },
+    "de": {
+        "window_title": "Big Community Desktop-Themen GUI",
+        "select_layout": "Desktop-Layout auswählen",
+        "select_shell_theme": "Shell-Thema auswählen",
+        "select_gtk_theme": "GTK-Thema auswählen",
+        "applying": "Wende {layout} Layout an...",
+        "applying_shell": "Wende {theme} Shell-Thema an...",
+        "applying_gtk": "Wende {theme} GTK-Thema an...",
+        "success": "{layout} Layout erfolgreich angewendet",
+        "success_shell": "{theme} Shell-Thema erfolgreich angewendet",
+        "success_gtk": "{theme} GTK-Thema erfolgreich angewendet",
+        "error_config": "Fehler: Konfigurationsdatei nicht gefunden - {file}",
+        "error_applying": "Fehler beim Anwenden des Layouts: {error}",
+        "error_shell": "Fehler beim Anwenden des Shell-Themas: {error}",
+        "error_gtk": "Fehler beim Anwenden des GTK-Themas: {error}",
+        "error": "Fehler: {error}",
+        "no_themes": "Keine Themen gefunden",
+        "refresh": "Aktualisieren",
+        "apply": "Anwenden",
+        "about": "Über",
+        "quit": "Beenden",
+        "description_layout": "Wende das {layout} Layout auf deinen Desktop an.",
+        "description_shell": "Wende das {theme} Thema auf deinen Shell-Desktop an.",
+        "description_gtk": "Wende das {theme} Thema auf deine GTK-Anwendungen an.",
+        "gnome": "GNOME",
+        "cinnamon": "Cinnamon",
+        "xfce": "XFCE"
+    },
+    "pt_BR": {
+        "window_title": "GUI de Temas de Área de Trabalho da Big Community",
+        "select_layout": "Selecionar Layout da Área de Trabalho",
+        "select_shell_theme": "Selecionar Tema do Shell",
+        "select_gtk_theme": "Selecionar Tema GTK",
+        "applying": "Aplicando layout {layout}...",
+        "applying_shell": "Aplicando tema do shell {theme}...",
+        "applying_gtk": "Aplicando tema GTK {theme}...",
+        "success": "Layout {layout} aplicado com sucesso",
+        "success_shell": "Tema do shell {theme} aplicado com sucesso",
+        "success_gtk": "Tema GTK {theme} aplicado com sucesso",
+        "error_config": "Erro: Arquivo de configuração não encontrado - {file}",
+        "error_applying": "Erro ao aplicar o layout: {error}",
+        "error_shell": "Erro ao aplicar o tema do shell: {error}",
+        "error_gtk": "Erro ao aplicar o tema GTK: {error}",
+        "error": "Erro: {error}",
+        "no_themes": "Nenhum tema encontrado",
+        "refresh": "Atualizar",
+        "apply": "Aplicar",
+        "about": "Sobre",
+        "quit": "Sair",
+        "description_layout": "Aplica o layout {layout} à sua área de trabalho.",
+        "description_shell": "Aplica o tema {theme} ao shell da sua área de trabalho.",
+        "description_gtk": "Aplica o tema {theme} às suas aplicações GTK.",
+        "gnome": "GNOME",
+        "cinnamon": "Cinnamon",
+        "xfce": "XFCE"
+    }
 }
 
 # Get system language
@@ -47,13 +162,13 @@ def get_system_language():
     try:
         lang = locale.getdefaultlocale()[0]
         if lang:
-            # Extract primary language code (e.g., 'pt' from 'pt_BR')
-            primary_lang = lang.split('_')[0]
             # Check if we have a translation for the full locale
             if lang in TRANSLATIONS:
                 return lang
+            # Extract primary language code (e.g., 'pt' from 'pt_BR')
+            primary_lang = lang.split('_')[0]
             # Check if we have a translation for the primary language
-            elif primary_lang in TRANSLATIONS:
+            if primary_lang in TRANSLATIONS:
                 return primary_lang
     except:
         pass
@@ -64,21 +179,37 @@ def _(text):
     lang = get_system_language()
     return TRANSLATIONS.get(lang, TRANSLATIONS["en"]).get(text, text)
 
+# Detect desktop environment
+def detect_desktop_environment():
+    desktop = os.environ.get('XDG_CURRENT_DESKTOP', '').lower()
+    if 'gnome' in desktop:
+        return 'gnome'
+    elif 'cinnamon' in desktop:
+        return 'cinnamon'
+    elif 'xfce' in desktop:
+        return 'xfce'
+    else:
+        # Fallback to checking other environment variables
+        if 'GNOME_DESKTOP_SESSION_ID' in os.environ:
+            return 'gnome'
+        elif 'CINNAMON_VERSION' in os.environ:
+            return 'cinnamon'
+        elif 'XFCE4_SESSION' in os.environ:
+            return 'xfce'
+        return 'gnome'  # Default to GNOME
+
 class LayoutSwitcher(Adw.ApplicationWindow):
     def __init__(self, app):
         super().__init__(application=app)
         self.set_title(_("window_title"))
         self.set_default_size(1366, 768)
         
-        # Define layouts FIRST - before any other methods are called
-        self.layouts = [
-            ("Classic", "classic.txt", "classic.png", "view-continuous-symbolic"),
-            ("Vanilla", "vanilla.txt", "vanilla.png", "view-grid-symbolic"),
-            ("G-Unity", "g-unity.txt", "g-unity.png", "view-app-grid-symbolic"),
-            ("New", "new.txt", "new.png", "view-paged-symbolic"),
-            ("Next-Gnome", "next-gnome.txt", "next-gnome.png", "view-paged-symbolic"),
-            ("Modern", "modern.txt", "modern.png", "view-grid-symbolic")
-        ]
+        # Detect desktop environment
+        self.desktop_env = detect_desktop_environment()
+        print(f"Detected desktop environment: {self.desktop_env}")
+        
+        # Define layouts based on desktop environment
+        self.define_layouts()
         
         # Initialize state variables
         self.selected_item = None
@@ -99,6 +230,29 @@ class LayoutSwitcher(Adw.ApplicationWindow):
         if self.layouts:
             self.select_item((self.layouts[0][0], self.layouts[0][1]), "layout")
     
+    def define_layouts(self):
+        """Define layouts based on desktop environment"""
+        if self.desktop_env == 'gnome':
+            self.layouts = [
+                ("Classic", "classic.txt", "classic.png", "view-continuous-symbolic"),
+                ("Vanilla", "vanilla.txt", "vanilla.png", "view-grid-symbolic"),
+                ("G-Unity", "g-unity.txt", "g-unity.png", "view-app-grid-symbolic"),
+                ("New", "new.txt", "new.png", "view-paged-symbolic"),
+                ("Next-Gnome", "next-gnome.txt", "next-gnome.png", "view-paged-symbolic"),
+                ("Modern", "modern.txt", "modern.png", "view-grid-symbolic")
+            ]
+        elif self.desktop_env == 'cinnamon':
+            self.layouts = [
+                ("Classic", "classic.txt", "classic.png", "view-continuous-symbolic"),
+                ("Modern", "modern.txt", "modern.png", "view-grid-symbolic")
+            ]
+        elif self.desktop_env == 'xfce':
+            self.layouts = [
+                ("SUSE Way", "suse-way.txt", "suse-way.png", "view-continuous-symbolic"),
+                ("XFCE-Like", "xfce-like.txt", "xfce-like.png", "view-grid-symbolic"),
+                ("Big-like", "big-like.txt", "big-like.png", "view-app-grid-symbolic")
+            ]
+    
     def create_ui(self):
         """Create all UI components"""
         # Create toolbar view
@@ -107,6 +261,12 @@ class LayoutSwitcher(Adw.ApplicationWindow):
         # Create header bar
         header_bar = Adw.HeaderBar()
         toolbar_view.add_top_bar(header_bar)
+        
+        # Add desktop environment label
+        desktop_label = Gtk.Label()
+        desktop_label.set_text(f"{_(self.desktop_env.capitalize())} Desktop")
+        desktop_label.add_css_class("title-3")
+        header_bar.set_title_widget(desktop_label)
         
         # Add menu button
         menu_button = Gtk.MenuButton()
@@ -585,50 +745,34 @@ class LayoutSwitcher(Adw.ApplicationWindow):
         name, config_file = self.selected_item
         GLib.idle_add(self.update_status, _("applying").format(layout=name))
         
-        # Find config file path
+        # Find config file path based on desktop environment
         config_path = self.find_config_file(config_file)
         if not config_path:
             GLib.idle_add(self.update_status, _("error_config").format(file=config_file))
             return
         
-        # Apply layout using dconf with better error handling
+        # Apply layout based on desktop environment
         try:
-            # Use a more robust approach to apply the layout
-            with open(config_path, 'r') as f:
-                config_data = f.read()
+            if self.desktop_env == 'gnome':
+                self.apply_gnome_layout(config_path)
+            elif self.desktop_env == 'cinnamon':
+                self.apply_cinnamon_layout(config_path)
+            elif self.desktop_env == 'xfce':
+                self.apply_xfce_layout(config_path)
             
-            # Write to a temporary file to avoid issues
-            import tempfile
-            with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
-                temp_file.write(config_data)
-                temp_file_path = temp_file.name
+            # Give desktop time to apply changes
+            time.sleep(0.5)
             
-            try:
-                # Apply the configuration
-                result = subprocess.run(
-                    ["dconf", "load", "/org/gnome/shell/"],
-                    stdin=open(temp_file_path, 'r'),
-                    check=True,
-                    timeout=10  # Add timeout to prevent hanging
-                )
-                
-                # Give GNOME Shell time to apply changes
-                time.sleep(0.5)
-                
-                # Set a random wallpaper
-                wallpaper = self.get_random_wallpaper()
-                if wallpaper:
-                    success = self.set_wallpaper(wallpaper)
-                    if not success:
-                        print("Failed to set wallpaper")
-                else:
-                    print("No wallpaper available to set")
-                
-                GLib.idle_add(self.update_status, _("success").format(layout=name))
-            finally:
-                # Clean up temporary file
-                os.unlink(temp_file_path)
-                
+            # Set a random wallpaper
+            wallpaper = self.get_random_wallpaper()
+            if wallpaper:
+                success = self.set_wallpaper(wallpaper)
+                if not success:
+                    print("Failed to set wallpaper")
+            else:
+                print("No wallpaper available to set")
+            
+            GLib.idle_add(self.update_status, _("success").format(layout=name))
         except subprocess.TimeoutExpired:
             GLib.idle_add(self.update_status, _("error_applying").format(error="Operation timed out"))
         except subprocess.CalledProcessError as e:
@@ -636,20 +780,107 @@ class LayoutSwitcher(Adw.ApplicationWindow):
         except Exception as e:
             GLib.idle_add(self.update_status, _("error").format(error=str(e)))
     
+    def apply_gnome_layout(self, config_path):
+        """Apply GNOME layout using dconf"""
+        # Use a more robust approach to apply the layout
+        with open(config_path, 'r') as f:
+            config_data = f.read()
+        
+        # Write to a temporary file to avoid issues
+        import tempfile
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
+            temp_file.write(config_data)
+            temp_file_path = temp_file.name
+        
+        try:
+            # Apply the configuration
+            subprocess.run(
+                ["dconf", "load", "/org/gnome/shell/"],
+                stdin=open(temp_file_path, 'r'),
+                check=True,
+                timeout=10
+            )
+        finally:
+            # Clean up temporary file
+            os.unlink(temp_file_path)
+    
+    def apply_cinnamon_layout(self, config_path):
+        """Apply Cinnamon layout using dconf"""
+        # Use a more robust approach to apply the layout
+        with open(config_path, 'r') as f:
+            config_data = f.read()
+        
+        # Write to a temporary file to avoid issues
+        import tempfile
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
+            temp_file.write(config_data)
+            temp_file_path = temp_file.name
+        
+        try:
+            # Apply the configuration
+            subprocess.run(
+                ["dconf", "load", "/org/cinnamon/"],
+                stdin=open(temp_file_path, 'r'),
+                check=True,
+                timeout=10
+            )
+        finally:
+            # Clean up temporary file
+            os.unlink(temp_file_path)
+    
+    def apply_xfce_layout(self, config_path):
+        """Apply XFCE layout using xfconf-query"""
+        # Read the configuration file
+        with open(config_path, 'r') as f:
+            config_data = f.read()
+        
+        # Process each line in the configuration
+        for line in config_data.split('\n'):
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            
+            # Split line into property and value
+            parts = line.split(' ', 1)
+            if len(parts) != 2:
+                continue
+            
+            prop, val = parts
+            
+            # Apply the configuration using xfconf-query
+            subprocess.run(
+                ["xfconf-query", "-c", "xfce4-panel", "-p", prop, "-s", val],
+                check=True,
+                timeout=10
+            )
+    
     def apply_shell_theme(self):
         """Apply the selected shell theme"""
         theme_name = self.selected_item
         GLib.idle_add(self.update_status, _("applying_shell").format(theme=theme_name))
         
         try:
-            # Apply shell theme using gsettings with timeout
-            result = subprocess.run(
-                ["gsettings", "set", "org.gnome.shell.extensions.user-theme", "name", theme_name],
-                check=True,
-                timeout=10
-            )
+            # Apply shell theme based on desktop environment
+            if self.desktop_env == 'gnome':
+                subprocess.run(
+                    ["gsettings", "set", "org.gnome.shell.extensions.user-theme", "name", theme_name],
+                    check=True,
+                    timeout=10
+                )
+            elif self.desktop_env == 'cinnamon':
+                subprocess.run(
+                    ["gsettings", "set", "org.cinnamon.theme", "name", theme_name],
+                    check=True,
+                    timeout=10
+                )
+            elif self.desktop_env == 'xfce':
+                subprocess.run(
+                    ["xfconf-query", "-c", "xfwm4", "-p", "/general/theme", "-s", theme_name],
+                    check=True,
+                    timeout=10
+                )
             
-            # Give GNOME Shell time to apply changes
+            # Give desktop time to apply changes
             time.sleep(0.5)
             
             GLib.idle_add(self.update_status, _("success_shell").format(theme=theme_name))
@@ -666,8 +897,8 @@ class LayoutSwitcher(Adw.ApplicationWindow):
         GLib.idle_add(self.update_status, _("applying_gtk").format(theme=theme_name))
         
         try:
-            # Apply GTK theme using gsettings with timeout
-            result = subprocess.run(
+            # Apply GTK theme using gsettings
+            subprocess.run(
                 ["gsettings", "set", "org.gnome.desktop.interface", "gtk-theme", theme_name],
                 check=True,
                 timeout=10
@@ -770,6 +1001,15 @@ class LayoutSwitcher(Adw.ApplicationWindow):
         """Get available themes of specified type"""
         themes = []
         
+        # For shell themes, check based on desktop environment
+        if theme_type == "shell":
+            if self.desktop_env == 'gnome':
+                theme_type = "gnome-shell"
+            elif self.desktop_env == 'cinnamon':
+                theme_type = "cinnamon"
+            elif self.desktop_env == 'xfce':
+                theme_type = "xfwm4"
+        
         # Check user themes
         user_theme_dir = os.path.expanduser("~/.themes")
         if os.path.exists(user_theme_dir):
@@ -796,8 +1036,8 @@ class LayoutSwitcher(Adw.ApplicationWindow):
         return sorted(list(set(themes)))
     
     def get_shell_themes(self):
-        """Get available GNOME Shell themes"""
-        return self.get_themes("gnome-shell")
+        """Get available shell themes based on desktop environment"""
+        return self.get_themes("shell")
     
     def get_gtk_themes(self):
         """Get available GTK themes"""
@@ -835,18 +1075,28 @@ class LayoutSwitcher(Adw.ApplicationWindow):
     
     def refresh_shell_themes(self):
         """Refresh the list of available Shell themes"""
-        self.refresh_themes("gnome-shell", self.shell_theme_grid, lambda t: self.select_item(t, "shell"))
+        self.refresh_themes("shell", self.shell_theme_grid, lambda t: self.select_item(t, "shell"))
     
     def refresh_gtk_themes(self):
         """Refresh the list of available GTK themes"""
         self.refresh_themes("gtk-3.0", self.gtk_theme_grid, lambda t: self.select_item(t, "gtk"))
     
     def find_config_file(self, config_file):
-        """Search for config file in common locations"""
+        """Search for config file in common locations based on desktop environment"""
+        # Determine the config directory based on desktop environment
+        if self.desktop_env == 'gnome':
+            config_dir = "gnome-layouts"
+        elif self.desktop_env == 'cinnamon':
+            config_dir = "cinnamon-layouts"
+        elif self.desktop_env == 'xfce':
+            config_dir = "xfce-layouts"
+        else:
+            config_dir = "gnome-layouts"  # Default to GNOME
+        
         possible_paths = [
-            os.path.join(os.path.dirname(__file__), config_file),
-            os.path.expanduser(f"~/.config/gnome-layouts/{config_file}"),
-            f"/usr/share/gnome-layouts/{config_file}"
+            os.path.join(os.path.dirname(__file__), config_dir, config_file),
+            os.path.expanduser(f"~/.config/{config_dir}/{config_file}"),
+            f"/usr/share/{config_dir}/{config_file}"
         ]
         
         for path in possible_paths:
@@ -889,6 +1139,10 @@ class LayoutSwitcher(Adw.ApplicationWindow):
             .title-1 {
                 font-weight: 800;
                 font-size: 24pt;
+            }
+            .title-3 {
+                font-weight: 700;
+                font-size: 18pt;
             }
             .title-4 {
                 font-weight: 600;
