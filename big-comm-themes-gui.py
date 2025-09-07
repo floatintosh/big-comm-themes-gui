@@ -243,8 +243,8 @@ class LayoutSwitcher(Adw.ApplicationWindow):
             ]
         elif self.desktop_env == 'cinnamon':
             self.layouts = [
-                ("Classic", "classic.txt", "classic.png", "view-continuous-symbolic"),
-                ("Modern", "modern.txt", "modern.png", "view-grid-symbolic")
+                ("Classic", "classic.txt", "cinnamon-classic.png", "view-continuous-symbolic"),
+                ("Modern", "modern.txt", "cinnamon-modern.png", "view-grid-symbolic")
             ]
         elif self.desktop_env == 'xfce':
             self.layouts = [
